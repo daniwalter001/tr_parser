@@ -18,13 +18,16 @@ app.use(bodyParser.json());
 const TIMEOUT = process.env.TIMEOUT || 20000;
 
 app
+  .get("/", async (req, res) => {
+    return res.status(200).send("Working...");
+  })
   .post("/api/magnet", async (req, res) => {
     try {
       const { magnet } = req.body;
       let client = await WebTorrent({ maxConns: 2000, dht: true });
 
       const timeout = setTimeout(() => {
-        res.status(500).send("Timeout");
+        return res.status(500).send("Timeout");
       }, TIMEOUT);
 
       let ressss = await new Promise((resolve, reject) => {
@@ -65,6 +68,7 @@ app
       console.log({ error });
       res.status(500).send(error);
     }
+    return;
   })
   .post("/api/torrent", async (req, res) => {
     try {
@@ -114,6 +118,7 @@ app
       console.log({ error });
       res.status(500).send(error);
     }
+    return;
   });
 
 app.listen(process.env.PORT || 3000, () => {
