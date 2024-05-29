@@ -15,7 +15,7 @@ const bodyParser = require("body-parser");
 app.use(cors());
 app.use(bodyParser.json());
 
-const TIMEOUT = 10000;
+const TIMEOUT = process.env.TIMEOUT || 20000;
 
 app
   .post("/api/magnet", async (req, res) => {
